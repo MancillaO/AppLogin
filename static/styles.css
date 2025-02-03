@@ -122,6 +122,10 @@ body {
     transform: scale(1.1);
 }
 
+.forgot-password{
+    font-size: 16px;
+}
+
 /* Password Toggle Icon */
 .toggle-password {
     position: absolute;

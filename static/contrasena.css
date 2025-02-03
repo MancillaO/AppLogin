@@ -12,7 +12,7 @@ body {
     -webkit-font-smoothing: antialiased; /* Mejora la visualización en dispositivos Apple */
 }
 
-/* Recuperar Contraseña Container */
+/* Recuperar Contraseña Container */    
 .container {
     background: #fff; /* Fondo del contenedor cambiado a blanco */
     padding: 30px 40px;
