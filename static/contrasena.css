@@ -1,7 +1,8 @@
 /* Global Styles */
 body {
-    background-color: lightgray; /* Fondo cambiado a lightgray */
-    color: #000; /* Texto negro para mayor contraste */
+    background: linear-gradient(45deg, #a7c8eb, #ffffff);
+    color: #000;
+    /* Texto negro para mayor contraste */
     font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
@@ -9,19 +10,21 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0 20px;
-    -webkit-font-smoothing: antialiased; /* Mejora la visualización en dispositivos Apple */
+    -webkit-font-smoothing: antialiased;
+    /* Mejora la visualización en dispositivos Apple */
 }
 
-/* Recuperar Contraseña Container */    
+/* Recuperar Contraseña Container */
 .container {
-    background: #fff; /* Fondo del contenedor cambiado a blanco */
+    background: #ffffffd7;
     padding: 30px 40px;
     border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Sombras más suaves */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
     width: 100%;
     max-width: 450px;
     box-sizing: border-box;
-    border: 1px solid #000; /* Contorno negro */
+    border: 1px solid #000;
+    /* Contorno negro */
     position: relative;
     transform: translateZ(0);
 }
@@ -29,9 +32,10 @@ body {
 /* Form */
 h1 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 26px;
-    color: #000; /* Título en negro */
+    color: #000;
+    /* Título en negro */
 }
 
 /* Form Fields */
@@ -43,33 +47,35 @@ h1 {
 
 .form-group .icon {
     position: absolute;
-    left: 10px;
-    top: 50%;
+    left: 18px;
+    top: 58%;
     transform: translateY(-50%);
-    color: #000; /* Íconos en negro */
+    color: #071952;
     font-size: 20px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 14px 14px 14px 45px; /* Espacio para el ícono */
-    border: 2px solid rgba(0, 0, 0, 0.3); /* Contorno tenue */
+    padding: 14px 14px 14px 50px;
+    border: 2px solid rgba(0, 0, 0, 0.116);
+    /* Contorno tenue */
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.05); /* Fondo claro */
-    color: #000; /* Texto negro */
+    background-color: rgba(0, 0, 0, 0.03);
+    color: #000;
     outline: none;
     font-size: 16px;
     transition: all 0.3s ease;
     box-sizing: border-box;
+    margin-top: 10px;
 }
 
 .form-group input:focus {
-    background-color: rgba(0, 0, 0, 0.1); /* Fondo más oscuro al enfocar */
-    border-color: #000; /* Contorno negro al enfocar */
+    border-color: #05123a;
 }
 
 .form-group input::placeholder {
-    color: #666; /* Placeholder en gris oscuro */
+    color: #666;
+    /* Placeholder en gris oscuro */
 }
 
 /* Buttons */
@@ -78,20 +84,22 @@ button {
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(45deg, #D3D3D3, #BEBEBE); /* Botón degradado claro */
-    color: #000; /* Texto negro */
+    background: linear-gradient(45deg, #3674B5, #578FCA);
+    /* Botón degradado claro */
+    color: #fff;
+    /* Texto negro */
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra más tenue */
+    transition: all 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* Sombra más tenue */
 }
 
 button:hover {
-    background: linear-gradient(45deg, #BEBEBE, #D3D3D3);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
 }
 
 button:active {
@@ -101,9 +109,12 @@ button:active {
 
 /* Mensajes de éxito o error (común para ambos) */
 .flash-message {
-    background-color: #e9f7ef; /* Fondo verde suave */
-    color: #4CAF50; /* Texto verde suave */
-    border: 1px solid #c3e6cb; /* Borde verde suave */
+    background-color: #e9f7ef;
+    /* Fondo verde suave */
+    color: #4CAF50;
+    /* Texto verde suave */
+    border: 1px solid #c3e6cb;
+    /* Borde verde suave */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -111,7 +122,8 @@ button:active {
     font-size: 0.95rem;
 }
 
-.flash-message.success, .flash-message.error {
+.flash-message.success,
+.flash-message.error {
     background-color: #e9f7ef;
     color: #4CAF50;
     border: 1px solid #c3e6cb;
