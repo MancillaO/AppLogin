@@ -19,13 +19,36 @@ client = MongoClient("mongodb+srv://omancilla:2801@cluster0.kkt0x.mongodb.net/?r
 db = client["loginbd"]
 collection = db["users"]
 
+# Serializador para crear y verificar tokens
+serializer = Serializer(app.secret_key, salt='password-reset-salt')
+
 # Configuración de Mailjet
 MAILJET_API_KEY = '8f66f7959c48d59077fd01f96cc4ed93'
 MAILJET_SECRET_KEY = 'a485cde5407f62fe298d533ce8892d65'
 MAILJET_FROM_EMAIL = 'omarmncllav04@gmail.com'
 
-# Serializador para crear y verificar tokens
-serializer = Serializer(app.secret_key, salt='password-reset-salt')
+# Configuración de WhatsApp Cloud API
+WHATSAPP_TOKEN = 'EAAYPi40p2DsBOZBFLFWxDIW9ThoUVRVo0113ghDz8ZCmrSEwaZCuoA5WfwiGajojBG5IKJRyXZCnZCuN5Hukds2zYEpa3Fr77rQBbEeNm4Bw95qNqJnA4LtiXW9mZAxU0Hl7ZBZAO5Pyo7IVgB23XEBRvhmNlES06uNlI9jH2PwFzV7KmBeFa8OtSq2I4HM71QxEvwIfbZCxeMgV4gZBVZA03x5oAiAzCAbhUQGQeuMNl5RvWUZD'
+PHONE_NUMBER_ID = '563165460212223'  # ID del número de teléfono registrado
+MY_PHONE_NUMBER = '525511343686'  # Tu número en formato internacional
+
+def send_whatsapp_message(to, message):
+    url = "https://graph.facebook.com/v21.0/592489833940207/messages"
+    headers = {
+        'Authorization': f'Bearer {WHATSAPP_TOKEN}',
+        'Content-Type': 'application/json'
+    }
+    payload = {
+        "messaging_product": "whatsapp",
+        "to": to,
+        "type": "text",
+        "text": {"body": message}
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 200:
+        print(f"Mensaje enviado con éxito a {to}")
+    else:
+        print(f"Error al enviar el mensaje: {response.status_code}, {response.text}")
 
 # Función para enviar correos con Mailjet
 def enviar_email(destinatario, asunto, cuerpo):
@@ -75,6 +98,11 @@ def registro():
             'contrasena': hashed_password
         })
         session['usuario'] = usuario
+
+        # Enviar mensaje de WhatsApp
+        mensaje = f"Nuevo usuario registrado:\nUsuario: {usuario}\nCorreo: {email}"
+        send_whatsapp_message(MY_PHONE_NUMBER, mensaje)
+
         return redirect(url_for('pagina_principal'))
     return render_template('register.html')
 
