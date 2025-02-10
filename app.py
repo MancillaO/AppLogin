@@ -3,7 +3,8 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
 from itsdangerous import URLSafeTimedSerializer as Serializer
-import requests 
+import requests
+import re
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -25,12 +26,13 @@ serializer = Serializer(app.secret_key, salt='password-reset-salt')
 # Configuración de Mailjet
 MAILJET_API_KEY = '8f66f7959c48d59077fd01f96cc4ed93'
 MAILJET_SECRET_KEY = 'a485cde5407f62fe298d533ce8892d65'
+# MAILJET_FROM_EMAIL = 'omancilla@zohomail.com'
 MAILJET_FROM_EMAIL = 'omarmncllav04@gmail.com'
 
 # Configuración de WhatsApp Cloud API
 WHATSAPP_TOKEN = 'EAAYPi40p2DsBOZBFLFWxDIW9ThoUVRVo0113ghDz8ZCmrSEwaZCuoA5WfwiGajojBG5IKJRyXZCnZCuN5Hukds2zYEpa3Fr77rQBbEeNm4Bw95qNqJnA4LtiXW9mZAxU0Hl7ZBZAO5Pyo7IVgB23XEBRvhmNlES06uNlI9jH2PwFzV7KmBeFa8OtSq2I4HM71QxEvwIfbZCxeMgV4gZBVZA03x5oAiAzCAbhUQGQeuMNl5RvWUZD'
-PHONE_NUMBER_ID = '563165460212223'  # ID del número de teléfono registrado
-MY_PHONE_NUMBER = '525511343686'  # Tu número en formato internacional
+PHONE_NUMBER_ID = '592489833940207'
+MY_PHONE_NUMBER = '525511343686'   
 
 def send_whatsapp_message(to, message):
     url = "https://graph.facebook.com/v21.0/592489833940207/messages"
@@ -89,11 +91,12 @@ def registro():
         if collection.find_one({'email': email}):
             flash("El correo electrónico ya está registrado.")
             return redirect(url_for('registro'))
+        user = re.sub(r"\s+", "", usuario)
         # Hashear la contraseña
         hashed_password = bcrypt.generate_password_hash(contrasena).decode('utf-8')
         # Insertar usuario en la base de datos
         collection.insert_one({
-            'usuario': usuario,
+            'usuario': user,
             'email': email,
             'contrasena': hashed_password
         })
@@ -101,7 +104,7 @@ def registro():
 
         # Enviar mensaje de WhatsApp
         mensaje = f"Nuevo usuario registrado:\nUsuario: {usuario}\nCorreo: {email}"
-        send_whatsapp_message(MY_PHONE_NUMBER, mensaje)
+        # send_whatsapp_message(MY_PHONE_NUMBER, mensaje)
 
         return redirect(url_for('pagina_principal'))
     return render_template('register.html')
