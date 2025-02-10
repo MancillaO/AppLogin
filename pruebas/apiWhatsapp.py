@@ -2,8 +2,8 @@ import requests
 
 # Configuración de la API de WhatsApp
 WHATSAPP_TOKEN = 'EAAYPi40p2DsBOZBFLFWxDIW9ThoUVRVo0113ghDz8ZCmrSEwaZCuoA5WfwiGajojBG5IKJRyXZCnZCuN5Hukds2zYEpa3Fr77rQBbEeNm4Bw95qNqJnA4LtiXW9mZAxU0Hl7ZBZAO5Pyo7IVgB23XEBRvhmNlES06uNlI9jH2PwFzV7KmBeFa8OtSq2I4HM71QxEvwIfbZCxeMgV4gZBVZA03x5oAiAzCAbhUQGQeuMNl5RvWUZD'  # Reemplaza con tu token de acceso
-PHONE_NUMBER_ID = '563165460212223'  # Reemplaza con tu PHONE_NUMBER_ID
-TO_PHONE_NUMBER = '525511343686'  # Reemplaza con el número al que deseas enviar el mensaje (formato internacional)
+PHONE_NUMBER_ID = '592489833940207'
+TO_PHONE_NUMBER = '525511343686'  
 
 def send_whatsapp_message(to, message):
     url = "https://graph.facebook.com/v21.0/592489833940207/messages"
