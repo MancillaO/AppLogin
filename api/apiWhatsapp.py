@@ -1,9 +1,13 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-# Configuración de WhatsApp Cloud API
-WHATSAPP_TOKEN = 'EAAYPi40p2DsBOZBFLFWxDIW9ThoUVRVo0113ghDz8ZCmrSEwaZCuoA5WfwiGajojBG5IKJRyXZCnZCuN5Hukds2zYEpa3Fr77rQBbEeNm4Bw95qNqJnA4LtiXW9mZAxU0Hl7ZBZAO5Pyo7IVgB23XEBRvhmNlES06uNlI9jH2PwFzV7KmBeFa8OtSq2I4HM71QxEvwIfbZCxeMgV4gZBVZA03x5oAiAzCAbhUQGQeuMNl5RvWUZD'
-PHONE_NUMBER_ID = '592489833940207'
-MY_PHONE_NUMBER = '525511343686'
+load_dotenv()
+
+# Acceder a las variables de entorno
+WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+MY_PHONE_NUMBER = os.getenv("MY_PHONE_NUMBER")
 
 def send_whatsapp_message(to, message):
     url = f"https://graph.facebook.com/v21.0/{PHONE_NUMBER_ID}/messages"
