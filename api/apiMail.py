@@ -1,9 +1,13 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-# Configuración de Mailjet
-MAILJET_API_KEY = '8f66f7959c48d59077fd01f96cc4ed93'
-MAILJET_SECRET_KEY = 'a485cde5407f62fe298d533ce8892d65'
-MAILJET_FROM_EMAIL = 'omarmncllav04@gmail.com'
+load_dotenv()
+
+# Acceder a las variables de entorno
+MAILJET_API_KEY = os.getenv("MAILJET_API_KEY")
+MAILJET_SECRET_KEY = os.getenv("MAILJET_SECRET_KEY")
+MAILJET_FROM_EMAIL = os.getenv("MAILJET_FROM_EMAIL")
 
 def enviar_email(destinatario, asunto, cuerpo):
     url = "https://api.mailjet.com/v3.1/send"

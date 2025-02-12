@@ -3,22 +3,28 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
 from itsdangerous import URLSafeTimedSerializer as Serializer
+from dotenv import load_dotenv
 import re
+import os
 
 # Importar funciones desde la carpeta api
 from api import send_whatsapp_message, enviar_email
 
+# Cargar variables de entorno desde .env
+load_dotenv()
+
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-# Clave secreta para sesiones
-app.secret_key = "advpjsh"
+# Acceder a las variables de entorno
+app.secret_key = os.getenv("SECRET_KEY")
+MONGODB_URI = os.getenv("MONGODB_URI")
 
 # Configurar la duración de la sesión (1 hora)
 app.permanent_session_lifetime = timedelta(hours=1)
 
 # Configuración de MongoDB Atlas
-client = MongoClient("mongodb+srv://omancilla:2801@cluster0.kkt0x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient(MONGODB_URI)
 db = client["loginbd"]
 collection = db["users"]
 
