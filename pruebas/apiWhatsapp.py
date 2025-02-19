@@ -1,12 +1,15 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-# Configuración de la API de WhatsApp
-WHATSAPP_TOKEN = 'EAAYPi40p2DsBOZBFLFWxDIW9ThoUVRVo0113ghDz8ZCmrSEwaZCuoA5WfwiGajojBG5IKJRyXZCnZCuN5Hukds2zYEpa3Fr77rQBbEeNm4Bw95qNqJnA4LtiXW9mZAxU0Hl7ZBZAO5Pyo7IVgB23XEBRvhmNlES06uNlI9jH2PwFzV7KmBeFa8OtSq2I4HM71QxEvwIfbZCxeMgV4gZBVZA03x5oAiAzCAbhUQGQeuMNl5RvWUZD'  # Reemplaza con tu token de acceso
-PHONE_NUMBER_ID = '592489833940207'
-TO_PHONE_NUMBER = '525511343686'  
+load_dotenv()
+
+WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+MY_PHONE_NUMBER = os.getenv("MY_PHONE_NUMBER")
 
 def send_whatsapp_message(to, message):
-    url = "https://graph.facebook.com/v21.0/592489833940207/messages"
+    url = f"https://graph.facebook.com/v21.0/{PHONE_NUMBER_ID}/messages"
     headers = {
         'Authorization': f'Bearer {WHATSAPP_TOKEN}',
         'Content-Type': 'application/json'
@@ -24,8 +27,5 @@ def send_whatsapp_message(to, message):
         print(f"Error al enviar el mensaje: {response.status_code}, {response.text}")
 
 if __name__ == "__main__":
-    # Mensaje que deseas enviar
-    mensaje = "Hola, este es un mensaje de prueba enviado desde Python."
-    
-    # Enviar el mensaje
-    send_whatsapp_message(TO_PHONE_NUMBER, mensaje)
+    mensaje = "Hola, este es un mensaje de prueba enviado desde Python."    
+    send_whatsapp_message(MY_PHONE_NUMBER, mensaje)
