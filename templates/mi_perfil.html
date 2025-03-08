@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +10,30 @@
     <!-- Añadir Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="profile-container">
         <h2>Mi Perfil</h2>
         <!-- Ícono de usuario en grande -->
-        <i class="fas fa-user profile-icon"></i>
-        
+        <div class="profile-icon-container">
+            <i class="fas fa-user profile-icon"></i>
+        </div>
+
         <!-- Información del usuario -->
         <div class="profile-item">
             <i class="fas fa-user"></i>
-            <span>Usuario:</span> {{ usuario }}
+            <span>Usuario:</span>
+            <div class="profile-value">{{ usuario }}</div>
         </div>
         <div class="profile-item">
             <i class="fas fa-envelope"></i>
-            <span>Correo:</span> {{ email }}
+            <span>Correo:</span>
+            <div class="profile-value">{{ email }}</div>
         </div>
 
         <!-- Botón para volver al inicio -->
         <a href="/pagina_principal" class="btn-back">Volver a Inicio</a>
     </div>
 </body>
+
 </html>

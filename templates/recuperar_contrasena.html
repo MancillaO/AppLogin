@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,16 @@
     <link rel="shortcut icon" href="../static/img/icono.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Recuperar Contraseña</h1>
         {% with messages = get_flashed_messages(category_filter=['success', 'error']) %}
-            {% if messages %}
-                <div class="flash-message">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
+        {% if messages %}
+        <div class="flash-message">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
         {% endwith %}
         <form action="{{ url_for('recuperar_contrasena') }}" method="POST">
             <label for="email">Ingresa tu correo electrónico:</label>
@@ -24,8 +26,10 @@
                 <i class="fas fa-envelope icon"></i>
                 <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
             </div>
-            <button type="submit">Enviar</button>
+            <button type="submit" class="Button" id="submitButton">Enviar</button>
+            <a href="/login"><button type="button" id="backButton" class="Button">Inicio de Sesión</button></a>
         </form>
-    </div>    
+    </div>
 </body>
+
 </html>
