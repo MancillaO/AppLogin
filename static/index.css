@@ -1,5 +1,9 @@
 /* Global Styles */
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
     background: linear-gradient(45deg, #a7c8eb, #ffffff);
     color: #000;
     font-family: 'Roboto', sans-serif;
@@ -10,6 +14,7 @@ body {
 
 /* Navbar */
 .navbar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,6 +24,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 .navbar-brand h1 {
@@ -153,22 +159,38 @@ body {
     color: #071952;
 }
 
+.main-wrapper {
+    flex: 1;
+    /* Ocupa espacio restante entre header y footer */
+    display: flex;
+    justify-content: center;
+    /* Centrado horizontal */
+    align-items: center;
+    /* Centrado vertical */
+    padding: 20px;
+    /* Espaciado opcional */
+}
+
 /* Main Page */
 .main-container {
-    background: #ffffffd7;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
+    /* Eliminar flex: 1 */
     width: 100%;
     max-width: 900px;
-    box-sizing: border-box;
-    border: 1px solid #3674B5;
-    margin: 40px auto;
+    /* Ancho máximo */
+    max-height: 800px;
+    /* Altura máxima (ajusta según necesidades) */
     padding: 20px 40px;
-}
+    background: #ffffffd7;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3674B5;
+    overflow-y: auto;
+    /* Scroll si el contenido excede la altura */
+}   
 
 .welcome-text {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .main-container h2 {
@@ -186,7 +208,7 @@ body {
 }
 
 .novedades {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.03);
@@ -224,11 +246,11 @@ body {
 /* Footer */
 footer {
     text-align: center;
-    padding: 18px;
+    padding: 15px;
     background: linear-gradient(45deg, #3674B5, #578FCA);
     color: #fff;
     font-size: 14px;
-    margin-top: 20px;
+    margin-top: auto;
     box-shadow: 0 -4px 30px rgba(0, 0, 0, .2);
 }
 
@@ -265,7 +287,9 @@ footer a:hover {
     }
 
     .main-container {
-        margin: 20px;
+        max-width: 400px;
         padding: 20px;
+        min-height: auto;
+        /* Altura auto en móviles si es necesario */
     }
 }
