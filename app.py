@@ -172,7 +172,6 @@ def google_login_callback():
 
     if not google.authorized:
         return redirect(url_for('google.login'))
-
     resp = google.get('https://www.googleapis.com/oauth2/v3/userinfo')
     
     if not resp.ok:
@@ -209,9 +208,8 @@ def google_login_callback():
         })
         # Iniciar sesión con el nuevo usuario
         session['usuario'] = new_username
-
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000
+    app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000
