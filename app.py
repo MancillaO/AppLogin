@@ -207,3 +207,4 @@ def google_login_callback():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000
