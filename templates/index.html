@@ -7,7 +7,6 @@
     <title>Página Principal</title>
     <link rel="stylesheet" href="../static/index.css">
     <link rel="shortcut icon" href="../static/img/icono.png">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -18,7 +17,6 @@
                 <h1>Bienvenido, {{ usuario }}!</h1>
             </div>
             <ul class="navbar-menu">
-                <li><a href="/pagina_principal">INICIO</a></li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">{{ usuario[0].upper() }}</a>
                     <div class="dropdown-content">
@@ -47,24 +45,26 @@
         </div>
     </header>
 
-    <main class="main-container">
-        <div class="welcome-text">
-            <h2>¡Bienvenido a nuestra página web!</h2>
-            <p>Nos alegra tenerte aquí. Explora nuestras últimas novedades y disfruta de la experiencia.</p>
-        </div>
+    <div class="main-wrapper">
+        <main class="main-container">
+            <div class="welcome-text">
+                <h2>¡Bienvenido a nuestra página web!</h2>
+                <p>Nos alegra tenerte aquí. Explora nuestras últimas novedades y disfruta de la experiencia.</p>
+            </div>
 
-        <section class="novedades">
-            <h3>Novedades</h3>
-            <ul>
-                <li>¡Nuevo sistema de recompensas disponible!</li>
-                <li>Próxima actualización de funciones en 2 días.</li>
-                <li>Nuevo diseño de perfil ya disponible.</li>
-            </ul>
-        </section>
-    </main>
+            <section class="novedades">
+                <h3>Novedades</h3>
+                <ul>
+                    <li>¡Nuevo sistema de recompensas disponible!</li>
+                    <li>Próxima actualización de funciones en 2 días.</li>
+                    <li>Nuevo diseño de perfil ya disponible.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
 
     <footer>
-        <p>&copy; 2025 TuPáginaWeb. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Omancilla. Todos los derechos reservados.</p>
     </footer>
 
     <script>

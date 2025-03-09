@@ -79,32 +79,39 @@ h1 {
 }
 
 /* Buttons */
-button {
+.Button {
     width: 100%;
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(45deg, #3674B5, #578FCA);
-    /* Botón degradado claro */
-    color: #fff;
-    /* Texto negro */
     font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
     cursor: pointer;
     transition: all 0.4s ease, transform 0.2s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     /* Sombra más tenue */
 }
 
-button:hover {
+.Button:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
 
-button:active {
+.Button:active {
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#submitButton{
+    background: linear-gradient(45deg, #3674B5, #578FCA);
+    color: #fff;
+    margin-bottom: .8rem;
+    font-weight: bold;
+}
+
+#backButton{
+    background: linear-gradient(45deg, #d6e7ff, #c8e0ff);
+    color: #010c18;
+    border: 1px solid #92bfee;
 }
 
 /* Mensajes de éxito o error (común para ambos) */
