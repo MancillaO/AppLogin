@@ -167,7 +167,6 @@ def logout():
 
 @app.route('/google_login/callback')
 def google_login_callback():
-    # Si el usuario ya está autenticado, redirigirlo a la página principal
     if 'usuario' in session:
         return redirect(url_for('pagina_principal'))
 
@@ -182,29 +181,37 @@ def google_login_callback():
 
     user_info = resp.json()
 
-    print("Respuesta de Google:", user_info)
-
     if 'email' not in user_info:
         flash("Error: Google no proporcionó un email.", "error")
         return redirect(url_for('login'))
 
     google_id = user_info.get("sub")
 
-    # Verificar si el usuario ya está registrado
-    user = collection.find_one({'email': user_info['email']})
-    if not user:
+    # Verificar si el email ya está registrado
+    existing_user = collection.find_one({'email': user_info['email']})
+    
+    if existing_user:
+        # Actualizar el usuario existente con el Google ID si no lo tiene
+        if 'google_id' not in existing_user:
+            collection.update_one(
+                {'email': user_info['email']},
+                {'$set': {'google_id': google_id}}
+            )
+        # Usar el nombre de usuario existente para la sesión
+        session['usuario'] = existing_user['usuario']
+    else:
         # Registrar nuevo usuario con Google
+        new_username = user_info.get('name', 'Usuario sin nombre')
         collection.insert_one({
-            'usuario': user_info.get('name', 'Usuario sin nombre'),
+            'usuario': new_username,
             'email': user_info['email'],
-            'google_id': google_id  # Guardamos el ID único de Google
+            'google_id': google_id
         })
-
-    # Iniciar sesión guardando el nombre en la sesión
-    session['usuario'] = user_info.get('name', 'Usuario sin nombre')
+        # Iniciar sesión con el nuevo usuario
+        session['usuario'] = new_username
 
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    # app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000
+    # app.run(debug=True)
+    app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000
