@@ -40,6 +40,12 @@
             </div>
 
             <button type="submit" class="btn">Iniciar Sesión</button>
+            <a href="{{ url_for('google.login') }}">
+                <button type="button" id="btn-google">
+                    <img src="{{ url_for('static', filename='img/google.png') }}" alt="Google logo" class="google-logo">
+                    Entrar con Google
+                </button>
+            </a>
 
             <!-- Enlace para recuperación de contraseña -->
             <p class="forgot-password"><a href="/recuperar_contrasena">¿Olvidaste tu contraseña?</a></p>
