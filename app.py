@@ -3,6 +3,7 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
 from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask_dance.contrib.google import make_google_blueprint, google
 from dotenv import load_dotenv
 import re
 import os
@@ -27,6 +28,26 @@ app.permanent_session_lifetime = timedelta(hours=1)
 client = MongoClient(MONGODB_URI)
 db = client["loginbd"]
 collection = db["users"]
+
+
+# Configurar el blueprint correctamente
+google_bp = make_google_blueprint(
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    redirect_to='google_login_callback',
+    scope=[
+        "openid", 
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email"
+    ]
+)
+
+app.register_blueprint(google_bp, url_prefix="/google_login")
+
+@app.route('/login_google')
+def login_google():
+    # Redirige a Google para la autenticación
+    return redirect(url_for('google.login'))
 
 # Serializador para crear y verificar tokens
 serializer = Serializer(app.secret_key, salt='password-reset-salt')
@@ -144,5 +165,46 @@ def logout():
     session.pop('usuario', None)
     return redirect(url_for('login'))
 
+@app.route('/google_login/callback')
+def google_login_callback():
+    # Si el usuario ya está autenticado, redirigirlo a la página principal
+    if 'usuario' in session:
+        return redirect(url_for('pagina_principal'))
+
+    if not google.authorized:
+        return redirect(url_for('google.login'))
+
+    resp = google.get('https://www.googleapis.com/oauth2/v3/userinfo')
+    
+    if not resp.ok:
+        flash("Error al obtener información de Google. Intenta nuevamente.", "error")
+        return redirect(url_for('login'))
+
+    user_info = resp.json()
+
+    print("Respuesta de Google:", user_info)
+
+    if 'email' not in user_info:
+        flash("Error: Google no proporcionó un email.", "error")
+        return redirect(url_for('login'))
+
+    google_id = user_info.get("sub")
+
+    # Verificar si el usuario ya está registrado
+    user = collection.find_one({'email': user_info['email']})
+    if not user:
+        # Registrar nuevo usuario con Google
+        collection.insert_one({
+            'usuario': user_info.get('name', 'Usuario sin nombre'),
+            'email': user_info['email'],
+            'google_id': google_id  # Guardamos el ID único de Google
+        })
+
+    # Iniciar sesión guardando el nombre en la sesión
+    session['usuario'] = user_info.get('name', 'Usuario sin nombre')
+
+    return redirect(url_for('pagina_principal'))
+
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)  # Usa https://localhost:5000

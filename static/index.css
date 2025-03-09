@@ -1,4 +1,8 @@
 /* Global Styles */
+* {
+    text-decoration: none;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -186,7 +190,7 @@ body {
     border: 1px solid #3674B5;
     overflow-y: auto;
     /* Scroll si el contenido excede la altura */
-}   
+}
 
 .welcome-text {
     text-align: center;

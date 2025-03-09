@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +11,19 @@
     <link rel="shortcut icon" href="../static/img/icono.png">
     <script defer src="../static/app.js"></script>
 </head>
-<body>  
+
+<body>
     <div class="login-container">
         <form class="login-form" action="/registro" method="POST">
             <h2>REGISTRO DE USUARIO</h2>
-            
+
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="error-message">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>  
+            <div class="error-message">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
             {% endif %}
             {% endwith %}
 
@@ -29,25 +31,32 @@
                 <i class="fas fa-user icon"></i>
                 <input type="text" name="usuario" placeholder="Nombre de Usuario" required>
             </div>
-            
+
             <div class="form-group">
                 <i class="fas fa-envelope icon"></i>
                 <input type="email" name="email" placeholder="Correo Electrónico" required>
             </div>
-            
+
             <div class="form-group">
                 <i class="fas fa-lock icon"></i>
                 <input type="password" name="contrasena" id="password" placeholder="Contraseña" required>
                 <i class="toggle-password" id="togglePassword"></i>
-            </div>                              
-            
+            </div>
+
             <button type="submit" class="btn">Registrarse</button>
+            <a href="{{ url_for('google.login') }}">
+                <button type="button" id="btn-google">
+                    <img src="{{ url_for('static', filename='img/google.png') }}" alt="Google logo" class="google-logo">
+                    Entrar con Google
+                </button>
+            </a>
 
             <div class="login-link">
                 <p>¿Ya tienes cuenta? <a href="login" class="login-text">¡Inicia sesión aquí!</a></p>
             </div>
-            
+
         </form>
     </div>
 </body>
+
 </html>

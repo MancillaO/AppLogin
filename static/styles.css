@@ -1,4 +1,7 @@
 /* Global Styles */
+*{
+    text-decoration: none;
+}
 body {
     background: linear-gradient(45deg, #a7c8eb, #ffffff);
     /* Fondo degradado claro */
@@ -12,17 +15,14 @@ body {
     margin: 0;
     padding: 0 20px;
     -webkit-font-smoothing: antialiased;
-    /* Mejora la visualización en dispositivos Apple */
 }
 
 /* Login Container */
 .login-container {
     background: #ffffffd7;
-    /* Fondo del contenedor cambiado a blanco */
     padding: 30px 40px;
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
-    /* Sombras más suaves */
     width: 100%;
     max-width: 450px;
     box-sizing: border-box;
@@ -64,7 +64,7 @@ body {
     /* Contorno tenue */
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.03);
-        color: #000;
+    color: #000;
     outline: none;
     font-size: 16px;
     transition: all 0.3s ease;
@@ -90,16 +90,13 @@ body {
     border: none;
     border-radius: 10px;
     background: linear-gradient(45deg, #3674B5, #578FCA);
-    /* Botón degradado claro */
     color: #fff;
-    /* Texto negro */
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.4s ease, transform 0.2s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    /* Sombra más tenue */
 }
 
 .btn:hover {
@@ -108,6 +105,42 @@ body {
 }
 
 .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Botón de Google */
+#btn-google {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #d6e7ff, #c8e0ff);
+    color: #010c18;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#btn-google:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+#btn-google img {
+    width: 25px;
+}
+
+#btn-google:active {
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -198,10 +231,9 @@ body {
     opacity: 0;
 }
 
-/* Estilo del mensaje de error */
+
 .error-message {
     color: #ff4d4d;
-    /* Rojo claro para indicar error */
     font-size: 14px;
     text-align: center;
     margin-bottom: 15px;
