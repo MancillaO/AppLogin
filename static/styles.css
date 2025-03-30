@@ -26,7 +26,7 @@ body {
     width: 100%;
     max-width: 450px;
     box-sizing: border-box;
-    border: 1px solid #3674B5;
+    /* border: 1px solid #3674B5; */
     position: relative;
     transform: translateZ(0);
 }

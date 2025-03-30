@@ -9,7 +9,7 @@ import re
 import os
 
 # Importar funciones desde la carpeta api
-from api import send_whatsapp_message, enviar_email, get_blueprint
+from api import send_whatsapp_message, send_telegram_message, enviar_email, get_blueprint
 
 # Cargar variables de entorno
 load_dotenv()
@@ -39,7 +39,8 @@ def create_user(usuario, email, contrasena):
 
 def send_registration_notification(usuario, email):
     mensaje = f"Nuevo usuario registrado:\nUsuario: {usuario}\nCorreo: {email}"
-    send_whatsapp_message("525511343686", mensaje)
+    # send_whatsapp_message("525511343686", mensaje)
+    send_telegram_message(mensaje)
 
 # Rutas principales
 @app.route('/')
