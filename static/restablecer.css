@@ -1,117 +1,38 @@
-/* Estilos específicos para restablecer_contrasena.html */
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(45deg, #a7c8eb, #ffffff);
+    color: #000;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    padding: 0 20px;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Container */
 .container {
+    background: #ffffffd7;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
     width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-h1 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 5px;
-    text-align: left;
-}
-
-.input-container {
+    max-width: 450px;
+    box-sizing: border-box;
     position: relative;
-    width: 100%;
-    margin-bottom: 20px;
+    transform: translateZ(0);
 }
 
-.input-container input {
-    width: 100%;
-    padding: 10px 40px 10px 10px; /* Ajuste para el ícono */
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-    color: #000;
-    background-color: #f9f9f9;
-}
-
-.input-container input:focus {
-    border-color: #333;
-    outline: none;
-}
-
-.input-container .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    color: #555;
-    cursor: pointer;
-    pointer-events: auto;
-}
-
-button {
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-p {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-p a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-p a:hover {
-    text-decoration: underline;
-}
-
-.flash-message {
-    background-color: #e9f7ef;
-    color: #4CAF50;
-    border: 1px solid #c3e6cb;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+/* Título */
+h1 {
     text-align: center;
-    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-size: 26px;
+    color: #000;
 }
+
 /* Form Fields */
 .form-group {
     position: relative;
@@ -121,19 +42,19 @@ p a:hover {
 
 .form-group .icon {
     position: absolute;
-    left: 10px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: #000;
+    color: #071952;
     font-size: 20px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 14px 14px 14px 45px; /* Espacio para el ícono de la izquierda */
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    padding: 14px 14px 14px 50px;
+    border: 2px solid rgba(0, 0, 0, 0.116);
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.03);
     color: #000;
     outline: none;
     font-size: 16px;
@@ -142,25 +63,98 @@ p a:hover {
 }
 
 .form-group input:focus {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-color: #000;
+    border-color: #05123a;
 }
 
 .form-group input::placeholder {
     color: #666;
 }
 
+/* Label */
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Buttons */
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #3674B5, #578FCA);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Links */
+p {
+    text-align: center;
+    font-size: 16px;
+}
+
+p a {
+    color: #071952;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Mensajes flash */
+.flash-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.flash-message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-message.error {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    border: 1px solid #ff4d4d;
+}
+
 /* Password Toggle Icon */
 .toggle-password {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
     cursor: pointer;
     background: transparent;
-    border: 2px solid #000;
+    border: 2px solid #071952;
     border-radius: 50%;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -175,7 +169,7 @@ p a:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 2px solid #000;
+    border: 2px solid #071952;
     background-color: transparent;
 }
 
@@ -187,10 +181,17 @@ p a:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
-    background: #000;
+    background: #071952;
     opacity: 1;
 }
 
 .toggle-password.active::after {
     opacity: 0;
+}
+
+/* Ajuste para el botón de volver */
+.back-link {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
 }
