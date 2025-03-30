@@ -34,6 +34,7 @@ def create_local_user(usuario, email, contrasena):
         'usuario': usuario.strip(),
         'email': email,
         'contrasena': hashed,
+        'auth_type': 'local',
     })
 
 def create_google_user(usuario, email, google_id):
@@ -41,6 +42,7 @@ def create_google_user(usuario, email, google_id):
         'usuario': usuario.strip(),
         'email': email,
         'google_id': google_id,
+        'auth_type': 'google',
     })
 
 def send_registration_notification(usuario, email):
@@ -122,8 +124,21 @@ def recuperar_contrasena():
                 
             token = serializer.dumps(email)
             enlace = url_for('restablecer_contrasena', token=token, _external=True)
-            enviar_email(email, "Recuperación de contraseña", 
-                        f'<a href="{enlace}">Restablecer contraseña</a>')
+            
+            # Leer la plantilla HTML
+            with open('templates/email/correoRecuperacion.html', 'r', encoding='utf-8') as file:
+                template = file.read()
+            
+            # Reemplazar el enlace en la plantilla
+            mensaje_html = template.replace('{enlace}', enlace)
+            
+            # Enviar el correo con el HTML
+            enviar_email(
+                email, 
+                "Recuperación de contraseña", 
+                mensaje_html
+            )
+            
             flash("Te hemos enviado un correo para recuperar tu contraseña.", "success")
         else:
             flash("El correo electrónico no está registrado.", "error")
@@ -202,5 +217,5 @@ def google_login_callback():
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run(ssl_context='adhoc', debug=True)
+    app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)
