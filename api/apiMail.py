@@ -25,7 +25,7 @@ def enviar_email(destinatario, asunto, cuerpo):
     try:
         response = requests.post(url, auth=auth, json=data)
         if response.status_code == 200:
-            print(f"Correo enviado con éxito! Status code: {response.status_code}")
+            print(f"Correo enviado con éxito! Status code: {response.status_code}\nCorreo: {destinatario}")
         else:
             print(f"Error al enviar el correo: {response.status_code}, {response.text}")
     except Exception as e:

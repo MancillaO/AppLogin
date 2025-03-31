@@ -1,8 +1,5 @@
 import requests
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 # Acceder a las variables de entorno
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")

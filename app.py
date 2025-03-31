@@ -2,48 +2,20 @@ from flask import Flask, request, redirect, url_for, session, flash, render_temp
 from flask_dance.contrib.google import google
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
-from pymongo import MongoClient
 from itsdangerous import URLSafeTimedSerializer
-from dotenv import load_dotenv
 import os
 
 # Importar funciones desde la carpeta api
 from api import send_telegram_message, enviar_email, get_blueprint
-
-# Cargar variables de entorno
-load_dotenv()
+from database import get_user, create_local_user, create_google_user, update_user, update_password
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.secret_key = os.getenv("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(hours=1)
 
-# Configuración MongoDB
-db = MongoClient(os.getenv("MONGODB_URI"))["loginbd"]["users"]
-
 # Serializador para tokens
 serializer = URLSafeTimedSerializer(app.secret_key, salt='password-reset-salt')
-
-# Funciones auxiliares
-def get_user(field, value):
-    return db.find_one({field: value})
-
-def create_local_user(usuario, email, contrasena):
-    hashed = bcrypt.generate_password_hash(contrasena).decode('utf-8')
-    db.insert_one({
-        'usuario': usuario.strip(),
-        'email': email,
-        'contrasena': hashed,
-        'auth_type': 'local',
-    })
-
-def create_google_user(usuario, email, google_id):
-    db.insert_one({
-        'usuario': usuario.strip(),
-        'email': email,
-        'google_id': google_id,
-        'auth_type': 'google',
-    })
 
 def send_registration_notification(usuario, email):
     message = (
@@ -161,7 +133,7 @@ def restablecer_contrasena(token):
         nueva_contrasena = bcrypt.generate_password_hash(
             request.form['nueva_contrasena']
         ).decode('utf-8')
-        db.update_one({'email': email}, {'$set': {'contrasena': nueva_contrasena}})
+        update_password(email, request.form['nueva_contrasena'])
         flash("Tu contraseña ha sido restablecida con éxito.", "success")
         return redirect(url_for('login'))
         
@@ -204,18 +176,12 @@ def google_login_callback():
         # Usuario existente
         if user.get('auth_type') == 'local':
             # Convertir usuario local a Google si coincide el email
-            db.update_one(
-                {'email': email}, 
-                {'$set': {
-                    'google_id': user_info.get('sub'),
-                    'auth_type': 'google'
-                }}
-            )
+            update_user(email, {'auth_type': 'google', 'google_id': user_info.get('sub')})
         session['usuario'] = user['usuario']
         
     session.permanent = True
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    # app.run(ssl_context='adhoc', debug=True)
+    # app.run(debug=True)
+    app.run(ssl_context='adhoc', debug=True)
