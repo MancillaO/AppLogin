@@ -7,7 +7,7 @@ import os
 
 # Importar funciones desde la carpeta api
 from api import send_telegram_message, enviar_email, get_blueprint
-from database import get_user, create_local_user, create_google_user, update_user, update_password
+from database import db
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -17,14 +17,14 @@ app.permanent_session_lifetime = timedelta(hours=1)
 # Serializador para tokens
 serializer = URLSafeTimedSerializer(app.secret_key, salt='password-reset-salt')
 
-def send_registration_notification(usuario, email):
+def send_registration_notification(usuario, email, tipo):
     message = (
         f"📢 Nuevo Registro de Usuario 📢\n\n"
         f"👤 Usuario: {usuario}\n"
-        f"📧 Correo Electrónico: {email}\n\n"
+        f"📧 Correo Electrónico: {email}\n"
+        f"🔑 Tipo de Registro: {tipo}\n\n"
         "✅ ¡Revisa el panel de administración para más detalles!"
     )
-    # send_whatsapp_message("525511343686", message)
     send_telegram_message(message)
 
 # Rutas principales
@@ -39,12 +39,12 @@ def registro():
         email = request.form['email']
         contrasena = request.form['contrasena']
         
-        if get_user('email', email):
+        if db.get_user('email', email):
             flash("El correo electrónico ya está registrado.")
             return redirect(url_for('registro'))
             
-        create_local_user(usuario, email, contrasena)
-        send_registration_notification(usuario, email)
+        db.create_local_user(usuario, email, contrasena)
+        send_registration_notification(usuario, email, 'Local')
         session.permanent = True
         session['usuario'] = usuario
         return redirect(url_for('pagina_principal'))
@@ -56,7 +56,7 @@ def login():
     if request.method == 'POST':
         usuario = request.form['usuario']
         contrasena = request.form['contrasena']
-        user = get_user('usuario', usuario)
+        user = db.get_user('usuario', usuario)
         
         if user and user.get('auth_type') == 'local' and bcrypt.check_password_hash(user['contrasena'], contrasena):
             session.permanent = True
@@ -80,14 +80,14 @@ def pagina_principal():
 def mi_perfil():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-    user = get_user('usuario', session['usuario'])
+    user = db.get_user('usuario', session['usuario'])
     return render_template('mi_perfil.html', usuario=user['usuario'], email=user['email'])
 
 @app.route('/recuperar_contrasena', methods=['GET', 'POST'])
 def recuperar_contrasena():
     if request.method == 'POST':
         email = request.form['email']
-        user = get_user('email', email)
+        user = db.get_user('email', email)
         if user:
             # Verificar si es un usuario local antes de enviar el correo
             if user.get('auth_type') == 'google':
@@ -124,7 +124,7 @@ def restablecer_contrasena(token):
         flash("El enlace de restablecimiento ha caducado o es inválido.", "error")
         return redirect(url_for('recuperar_contrasena'))
         
-    user = get_user('email', email)
+    user = db.get_user('email', email)
     if not user or user.get('auth_type') == 'google':
         flash("No se puede restablecer la contraseña para este usuario.", "error")
         return redirect(url_for('login'))
@@ -133,7 +133,7 @@ def restablecer_contrasena(token):
         nueva_contrasena = bcrypt.generate_password_hash(
             request.form['nueva_contrasena']
         ).decode('utf-8')
-        update_password(email, request.form['nueva_contrasena'])
+        db.update_password(email, request.form['nueva_contrasena'])
         flash("Tu contraseña ha sido restablecida con éxito.", "success")
         return redirect(url_for('login'))
         
@@ -163,25 +163,25 @@ def google_login_callback():
         
     user_info = resp.json()
     email = user_info['email']
-    user = get_user('email', email)
+    user = db.get_user('email', email)
     
     if not user:
         # Crear nuevo usuario de Google
         google_id = user_info.get('sub')  # ID único de Google
         usuario = user_info.get('name', 'Usuario Google')
-        create_google_user(usuario, email, google_id)
-        send_registration_notification(usuario, email)
+        db.create_google_user(usuario, email, google_id)
+        send_registration_notification(usuario, email, 'Google')
         session['usuario'] = usuario
     else:
         # Usuario existente
         if user.get('auth_type') == 'local':
             # Convertir usuario local a Google si coincide el email
-            update_user(email, {'auth_type': 'google', 'google_id': user_info.get('sub')})
+            db.update_user(email, {'auth_type': 'google', 'google_id': user_info.get('sub')})
         session['usuario'] = user['usuario']
         
     session.permanent = True
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run(ssl_context='adhoc', debug=True)
+    app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)
