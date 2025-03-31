@@ -1,8 +1,5 @@
 import requests
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 # Acceder a las variables de entorno
 MAILJET_API_KEY = os.getenv("MAILJET_API_KEY")
