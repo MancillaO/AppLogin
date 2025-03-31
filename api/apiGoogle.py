@@ -1,4 +1,4 @@
-from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.google import make_google_blueprint
 import os
 
 def get_blueprint():
