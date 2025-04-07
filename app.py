@@ -186,5 +186,5 @@ def google_login_callback():
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run(ssl_context='adhoc', debug=True)
+    app.run(debug=True)
+    # app.run(ssl_context='adhoc', debug=True)
