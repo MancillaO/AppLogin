@@ -3,7 +3,10 @@ from flask_dance.contrib.google import google
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from itsdangerous import URLSafeTimedSerializer
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Importar funciones desde la carpeta api
 from api import send_telegram_message, enviar_email, get_blueprint
@@ -21,7 +24,7 @@ def send_registration_notification(usuario, email, tipo):
     message = (
         f"📢 Nuevo Registro de Usuario 📢\n\n"
         f"👤 Usuario: {usuario}\n"
-        f"📧 Correo Electrónico: {email}\n"
+        f"📧 Correo Electrónico\n:{email}\n"
         f"🔑 Tipo de Registro: {tipo}\n\n"
         "✅ ¡Revisa el panel de administración para más detalles!"
     )
@@ -183,5 +186,5 @@ def google_login_callback():
     return redirect(url_for('pagina_principal'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    # app.run(ssl_context='adhoc', debug=True)
+    # app.run(debug=True)
+    app.run(ssl_context='adhoc', debug=True)
