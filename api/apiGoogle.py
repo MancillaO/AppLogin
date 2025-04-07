@@ -1,5 +1,9 @@
 from flask_dance.contrib.google import make_google_blueprint
 import os
+from dotenv import load_dotenv
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
 
 def get_blueprint():
     google_bp = make_google_blueprint(

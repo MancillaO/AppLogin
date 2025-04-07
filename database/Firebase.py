@@ -2,6 +2,10 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from flask_bcrypt import Bcrypt
 import os
+from dotenv import load_dotenv
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
 
 class Firestore:
     def __init__(self):
