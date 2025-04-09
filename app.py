@@ -24,7 +24,7 @@ def send_registration_notification(usuario, email, tipo):
     message = (
         f"📢 Nuevo Registro de Usuario 📢\n\n"
         f"👤 Usuario: {usuario}\n"
-        f"📧 Correo Electrónico\n:{email}\n"
+        f"📧 Correo Electrónico:\n{email}\n"
         f"🔑 Tipo de Registro: {tipo}\n\n"
         "✅ ¡Revisa el panel de administración para más detalles!"
     )
@@ -60,6 +60,9 @@ def login():
         usuario = request.form['usuario']
         contrasena = request.form['contrasena']
         user = db.get_user('usuario', usuario)
+
+        if not user: 
+            user = db.get_user('email', usuario)
         
         if user and user.get('auth_type') == 'local' and bcrypt.check_password_hash(user['contrasena'], contrasena):
             session.permanent = True
